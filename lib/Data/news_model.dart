@@ -10,9 +10,9 @@ News newsFromJson(String str) => News.fromJson(json.decode(str));
 String newsToJson(News data) => json.encode(data.toJson());
 
 class News {
-  final String status;
-  final int totalResults;
-  final List<Article> articles;
+  String status;
+  int totalResults;
+  List<Article> articles;
 
   News({
     @required this.status,
@@ -35,14 +35,14 @@ class News {
 }
 
 class Article {
-  final Source source;
-  final String author;
-  final String title;
-  final String description;
-  final String url;
-  final String urlToImage;
-  final DateTime publishedAt;
-  final String content;
+  Source source;
+  String author;
+  String title;
+  String description;
+  String url;
+  String urlToImage;
+  DateTime publishedAt;
+  String content;
 
   Article({
     @required this.source,
@@ -79,8 +79,8 @@ class Article {
 }
 
 class Source {
-  final String id;
-  final String name;
+  String id;
+  String name;
 
   Source({
     @required this.id,
