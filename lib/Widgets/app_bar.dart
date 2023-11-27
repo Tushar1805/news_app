@@ -3,8 +3,7 @@ import 'package:news_app/Widgets/search_bar.dart';
 import 'package:news_app/Widgets/tab_navigation.dart';
 import 'package:news_app/Widgets/utlits.dart';
 
-PreferredSize appBar(
-    BuildContext context, TextEditingController searchController) {
+PreferredSize appBar(BuildContext context) {
   return PreferredSize(
       preferredSize: Size.fromHeight(150),
       child: Container(

@@ -8,17 +8,28 @@ Widget searchBar() {
       Flexible(
         fit: FlexFit.tight,
         flex: 3,
-        child: TextFormField(
-          controller: searchController,
-          decoration: InputDecoration(
+        child: SizedBox(
+          height: 35,
+          child: TextFormField(
+            controller: searchController,
+            decoration: InputDecoration(
               filled: true,
               fillColor: Colors.grey.shade400,
               border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               prefixIcon: Icon(Icons.search),
               hintText: "Search News",
-              contentPadding: EdgeInsets.all(0)),
-          onChanged: (value) {},
+              contentPadding: EdgeInsets.all(0),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: BorderSide(
+                  color: Colors.redAccent,
+                  width: 0.3,
+                ),
+              ),
+            ),
+            onChanged: (value) {},
+          ),
         ),
       ),
       Flexible(
