@@ -12,5 +12,5 @@ BoxDecoration boxDecoration() {
 
 TextStyle tabTextStyle() {
   return TextStyle(
-      fontFamily: "Raleway", fontSize: 18, fontWeight: FontWeight.bold);
+      fontFamily: "RobotoMono", fontSize: 18, fontWeight: FontWeight.bold);
 }
