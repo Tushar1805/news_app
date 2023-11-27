@@ -35,15 +35,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int page = 1;
+  int headlinePage = 1;
   bool isMoreLoading = false;
-  final scrollController = ScrollController();
+  final scrollController1 = ScrollController();
+  final scrollController2 = ScrollController();
+  final searchController = TextEditingController();
   bool _dataLoaded = false;
 
   @override
   void initState() {
     super.initState();
-    scrollController.addListener(_scrollListener);
+    scrollController1.addListener(_scrollListener1);
+    scrollController2.addListener(_scrollListener2);
     _loadData(page);
+    _loadHeadline(headlinePage);
   }
 
   Future<void> _loadData(int page) async {
@@ -53,16 +58,37 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _scrollListener() async {
+  Future<void> _loadHeadline(int page) async {
+    await context.read<ApiService>().getHeadlines(page);
+    setState(() {
+      _dataLoaded = true;
+    });
+  }
+
+  void _scrollListener1() async {
     if (isMoreLoading || !_dataLoaded) return;
-    if (scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent) {
+    if (scrollController1.position.pixels ==
+        scrollController1.position.maxScrollExtent) {
       setState(() {
         isMoreLoading = true;
       });
       page = page + 1;
-      print("Page: $page");
       await _loadData(page);
+      setState(() {
+        isMoreLoading = false;
+      });
+    }
+  }
+
+  void _scrollListener2() async {
+    if (isMoreLoading || !_dataLoaded) return;
+    if (scrollController2.position.pixels ==
+        scrollController2.position.maxScrollExtent) {
+      setState(() {
+        isMoreLoading = true;
+      });
+      headlinePage = headlinePage + 1;
+      await _loadHeadline(headlinePage);
       setState(() {
         isMoreLoading = false;
       });
@@ -74,16 +100,24 @@ class _HomePageState extends State<HomePage> {
     return DefaultTabController(
         length: 2, // length
         child: Scaffold(
-          appBar: appBar(context),
+          appBar: appBar(context, searchController),
           body: TabBarView(children: [
             !_dataLoaded
                 ? Center(child: CircularProgressIndicator())
-                : Trending(
+                : trending(
                     context: context,
-                    scrollController: scrollController,
-                    articles: context.watch<ApiService>().articles,
+                    scrollController: scrollController1,
+                    articles: context.watch<ApiService>().filterList.length == 0
+                        ? context.watch<ApiService>().articles
+                        : context.watch<ApiService>().filterList,
                     isMoreLoading: isMoreLoading),
-            TopHeadlines(),
+            !_dataLoaded
+                ? Center(child: CircularProgressIndicator())
+                : topHealines(
+                    context: context,
+                    scrollController: scrollController1,
+                    articles: context.watch<ApiService>().headlines,
+                    isMoreLoading: isMoreLoading),
           ]),
         ));
   }

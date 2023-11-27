@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/Service/api_service.dart';
+import 'package:provider/provider.dart';
 
-Widget searchBar() {
-  TextEditingController searchController = new TextEditingController();
+Widget searchBar(context, searchController) {
+  final provider = Provider.of<ApiService>(context);
+  Future<void> updateList(String text) async {
+    await provider.filter(text);
+  }
+
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
@@ -28,7 +34,9 @@ Widget searchBar() {
                 ),
               ),
             ),
-            onChanged: (value) {},
+            onChanged: (value) async {
+              await updateList(value);
+            },
           ),
         ),
       ),

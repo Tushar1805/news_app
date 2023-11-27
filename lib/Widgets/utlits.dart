@@ -1,4 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:news_app/Data/news_model.dart';
+import 'package:http/http.dart' as http;
 
 BoxDecoration boxDecoration() {
   return BoxDecoration(
@@ -14,3 +18,5 @@ TextStyle tabTextStyle() {
   return TextStyle(
       fontFamily: "RobotoMono", fontSize: 18, fontWeight: FontWeight.bold);
 }
+
+
